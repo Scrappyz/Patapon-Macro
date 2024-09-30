@@ -127,3 +127,41 @@ Alt & d::
     toggle := false
 }
 #MaxThreadsPerHotkey 1
+
+; Party
+#MaxThreadsPerHotkey 3
+Alt & q::
+{
+    static toggle := false
+    if(toggle) {
+        toggle := false
+        return
+    }
+    toggle := true
+
+    ; 1 = delay, 2 = key
+    inputs := [[2, "{" . pata . " down}"], [1, release_delay], [2, "{" . pata . " up}"], [1, 360], [2, "{" . pon . " down}"], [1, release_delay], [2, "{" . pon . " up}"], [1, 360],
+               [2, "{" . don . " down}"], [1, release_delay], [2, "{" . don . " up}"], [1, 360], [2, "{" . chaka . " down}"], [1, release_delay], [2, "{" . chaka . " up}"],
+               [1, command_delay]]
+
+    i := 1
+    Loop {
+        if(i > inputs.Length) {
+            i := 1
+        }
+
+        if(inputs[i][1] == 1) {
+            sleep inputs[i][2]
+        } else if(inputs[i][1] == 2) {
+            SendInput inputs[i][2]
+        }
+
+        i++
+
+        if not toggle
+            break
+    }
+
+    toggle := false
+}
+#MaxThreadsPerHotkey 1
